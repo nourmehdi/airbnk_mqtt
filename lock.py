@@ -45,10 +45,10 @@ class airbnklock(LockEntity):
         # (rather than in the __init__)
         self._lock.register_callback(self.async_write_ha_state)
 
-        @callback
-        def message_received(topic: str, payload: str, qos: int) -> None:
+        
+       async def message_received(_p0:ReceiveMessage):
 
-            self._lock.dealwithmqttmsg(payload)
+            self._lock.dealwithmqttmsg(_p0.payload)
 
         await mqtt.async_subscribe(self.hass, self._state_topic, message_received)
 
